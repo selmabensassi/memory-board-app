@@ -1,20 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Flashcards</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="shuffleFlashcards()">Shuffle</ion-button>
+      <ion-button (click)="openFlashcardForm()">Add</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="flashcard-container">
+    <div
+      class="card"
+      *ngFor="let flashcard of flashcards; let i = index"
+      [class.flipped]="flashcard.isFlipped"
+      [style.transform]="getCardTransform(i)"
+      (click)="toggleFlip(flashcard)"
+    >
+      <div class="front" *ngIf="!flashcard.isFlipped">
+        <h2>{{ flashcard.question }}</h2>
+      </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <div class="back" *ngIf="flashcard.isFlipped">
+        <p>{{ flashcard.answer }}</p>
+      </div>
+    </div>
   </div>
 </ion-content>
